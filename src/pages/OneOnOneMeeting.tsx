@@ -18,11 +18,14 @@ import { meetingsRef } from "../utils/firebaseConfig";
 import { generateMeetingID } from "../utils/generateMeetingId";
 import { FieldErrorType, UserType } from "../utils/types";
 
+
+
 export default function OneOnOneMeeting() {
   useAuth();
   const [users] = useFetchUsers();
   const [createToast] = useToast();
   const uid = useAppSelector((zoomApp) => zoomApp.auth.userInfo?.uid);
+  const uname = useAppSelector((zoomApp) => zoomApp.auth.userInfo?.name);
   const navigate = useNavigate();
 
   const [meetingName, setMeetingName] = useState("");
@@ -75,6 +78,7 @@ export default function OneOnOneMeeting() {
       const meetingId = generateMeetingID();
       await addDoc(meetingsRef, {
         createdBy: uid,
+        userCreated:uname,
         meetingId,
         meetingName,
         meetingDesc,
@@ -88,6 +92,7 @@ export default function OneOnOneMeeting() {
         title: "One on One Meeting Created Successfully",
         type: "success",
       });
+      
       navigate("/");
     }
   };

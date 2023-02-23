@@ -30,6 +30,7 @@ export default function VideoConference() {
   const [users] = useFetchUsers();
   const [createToast] = useToast();
   const uid = useAppSelector((zoomApp) => zoomApp.auth.userInfo?.uid);
+  const uname = useAppSelector((zoomApp) => zoomApp.auth.userInfo?.name); 
   const navigate = useNavigate();
 
   const [meetingName, setMeetingName] = useState("");
@@ -84,6 +85,7 @@ export default function VideoConference() {
       const meetingId = generateMeetingID();
       await addDoc(meetingsRef, {
         createdBy: uid,
+        userCreated:uname,
         meetingId,
         meetingName,
         meetingDesc,
